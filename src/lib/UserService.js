@@ -1,4 +1,4 @@
-import User from "@/models/User";
+import User from "@/app/api/models/User";
 import { connectDB } from "@/lib/mongodb";
 
 class UserService {

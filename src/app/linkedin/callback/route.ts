@@ -3,7 +3,7 @@
     import jwt from "jsonwebtoken";
     import clientPromise from "@/lib/mongodb"; 
     import UserService from "@/lib/UserService";
-    const userService = new UserService();
+    // const userService = new UserService();
 
 
     export async function GET(req: Request) {
@@ -60,10 +60,10 @@
             );
 
             
-            const getresponse = userService.createOrUpdateLinkedinUser(userResponse.data);
+            const getresponse = UserService.createOrUpdateLinkedinUser(userResponse.data);
 
             const user = userResponse.data;
-            console.log(user);
+            console.log(user,'$',getresponse);
 
             // const jwt =  process.env.JWT_SECRET! + '@@' + user.name + '@@' + user.sub;
 
