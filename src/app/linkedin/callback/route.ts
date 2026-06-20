@@ -67,10 +67,10 @@
 
         console.log(user);
 
-        const jwt = "YOUR_APP_JWT";
+        const jwt =  process.env.JWT_SECRET! + user.id;
 
         return NextResponse.redirect(
-        `linkedrefapp://linkedin?token=${user}`
+        `linkedrefapp://linkedin?token=${jwt}`
         );
     } catch (error: any) {
         console.error(error.response?.data);
