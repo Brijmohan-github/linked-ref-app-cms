@@ -1,86 +1,130 @@
     import axios from "axios";
     import { NextResponse } from "next/server";
+    import jwt from "jsonwebtoken";
+    import clientPromise from "@/lib/mongodb"; 
+    import UserService from "@/lib/UserService";
+    const userService = new UserService();
+
 
     export async function GET(req: Request) {
-    const { searchParams } = new URL(req.url);
+    
+        const { searchParams } = new URL(req.url);
+        const code = searchParams.get("code");
 
-    const code = searchParams.get("code");
+        if (!code) {
+            return NextResponse.json(
+            { error: "Missing code" },
+            { status: 400 }
+            );
+        }
 
-    if (!code) {
-        return NextResponse.json(
-        { error: "Missing code" },
-        { status: 400 }
-        );
-    }
+        try {
+            const params = new URLSearchParams();
+            params.append(
+            "grant_type",
+            "authorization_code"
+            );
+            params.append("code", code);
+            params.append(
+            "client_id",
+            process.env.LINKEDIN_CLIENT_ID!
+            );
+            params.append(
+            "client_secret",
+            process.env.LINKEDIN_CLIENT_SECRET!
+            );
+            params.append(
+            "redirect_uri",
+            process.env.LINKEDIN_REDIRECT_URI!
+            );
+            const tokenResponse =
+            await axios.post(
+                "https://www.linkedin.com/oauth/v2/accessToken",
+                params,
+                {
+                headers: {
+                    "Content-Type":
+                    "application/x-www-form-urlencoded",
+                },
+                }
+            );
+            const accessToken = tokenResponse.data.access_token;
 
-    try {
-        const params = new URLSearchParams();
+            const userResponse = await axios.get(
+                "https://api.linkedin.com/v2/userinfo",
+                {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                }
+            );
 
-        params.append(
-        "grant_type",
-        "authorization_code"
-        );
+            
+            const getresponse = userService.createOrUpdateLinkedinUser(userResponse.data);
 
-        params.append("code", code);
+            const user = userResponse.data;
+            console.log(user);
 
-        params.append(
-        "client_id",
-        process.env.LINKEDIN_CLIENT_ID!
-        );
+            // const jwt =  process.env.JWT_SECRET! + '@@' + user.name + '@@' + user.sub;
 
-        params.append(
-        "client_secret",
-        process.env.LINKEDIN_CLIENT_SECRET!
-        );
+            // return NextResponse.redirect(
+            // `linkedrefapp://linkedin?token=${jwt}`
+            // );
 
-        params.append(
-        "redirect_uri",
-        process.env.LINKEDIN_REDIRECT_URI!
-        );
+            const payload = {
+                sub: user.sub,          // LinkedIn user id
+                name: user.name,
+                email: user.email,
+            };
 
-        const tokenResponse =
-        await axios.post(
-            "https://www.linkedin.com/oauth/v2/accessToken",
-            params,
+            // Create JWT valid for 7 days
+            const token = jwt.sign(
+                payload,
+                process.env.JWT_SECRET!,
+                {
+                    expiresIn: "7d",
+                }
+            );
+
+            return NextResponse.redirect(
+            `linkedrefapp://linkedin?token=${encodeURIComponent(token)}`
+            );
+
+
+        } catch (error: any) {
+            console.error(error.response?.data);
+
+            return NextResponse.json(
             {
-            headers: {
-                "Content-Type":
-                "application/x-www-form-urlencoded",
+                error:
+                error.response?.data || error.message,
             },
-            }
-        );
-
-        const accessToken =
-        tokenResponse.data.access_token;
-
-        const userResponse =
-        await axios.get(
-            "https://api.linkedin.com/v2/userinfo",
-            {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-            }
-        );
-
-        const user = userResponse.data;
-
-        console.log(user);
-
-        const jwt =  process.env.JWT_SECRET! + '@@' + user.name + '@@' + user.sub;
-
-        return NextResponse.redirect(
-        `linkedrefapp://linkedin?token=${jwt}`
-        );
-    } catch (error: any) {
-        console.error(error.response?.data);
-
-        return NextResponse.json(
-        {
-            error:
-            error.response?.data || error.message,
-        },
-        { status: 500 }
-        );
+            { status: 500 }
+            );
+        }
     }
-    }
+
+    const client = await clientPromise;
+
+    const db = client.db("linkedref");
+
+    const users = db.collection("users");
+
+    let existingUser = await users.findOne({
+      linkedinId: user.sub,
+    });
+
+    if (!existingUser) {
+      const result = await users.insertOne({
+        linkedinId: user.sub,
+        name: user.name,
+        email: user.email,
+        picture: user.picture,
+        provider: "linkedin",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+
+      existingUser = await users.findOne({
+        _id: result.insertedId,
+      });
