@@ -70,7 +70,7 @@
         const jwt = "YOUR_APP_JWT";
 
         return NextResponse.redirect(
-        `linkedrefapp://linkedin?token=${jwt}`
+        `linkedrefapp://linkedin?token=${user}`
         );
     } catch (error: any) {
         console.error(error.response?.data);
@@ -79,6 +79,7 @@
         {
             error:
             error.response?.data || error.message,
+            token: 
         },
         { status: 500 }
         );
