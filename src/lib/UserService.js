@@ -1,5 +1,6 @@
 import User from "@/app/api/models/User";
-import { connectDB } from "@/lib/mongodb";
+// import { connectDB } from "@/lib/mongodb";
+import connectDB from "@/lib/mongodb";
 
 class UserService {
   async createUser(userData) {
@@ -91,17 +92,18 @@ class UserService {
     const newUser = await User.create({
       linkedinId: linkedinProfile.sub,
       name: linkedinProfile.name,
-      givenName: linkedinProfile.given_name,
-      familyName: linkedinProfile.family_name,
+      // givenName: linkedinProfile.given_name,
+      // familyName: linkedinProfile.family_name,
       email: linkedinProfile.email,
-      emailVerified: linkedinProfile.email_verified,
+      // emailVerified: linkedinProfile.email_verified,
       profilePicture: linkedinProfile.picture,
-      country: linkedinProfile.locale?.country,
-      language: linkedinProfile.locale?.language,
-      referralCode,
+      // country: linkedinProfile.locale?.country,
+      // language: linkedinProfile.locale?.language,
+      // referralCode,
       lastLoginAt: new Date(),
     });
 
+    console.log("New user created:", newUser);
     return newUser;
   }
 

@@ -1,7 +1,6 @@
     import axios from "axios";
     import { NextResponse } from "next/server";
     import jwt from "jsonwebtoken";
-    import clientPromise from "@/lib/mongodb"; 
     import UserService from "@/lib/UserService";
     // const userService = new UserService();
 
@@ -37,6 +36,7 @@
             "redirect_uri",
             process.env.LINKEDIN_REDIRECT_URI!
             );
+
             const tokenResponse =
             await axios.post(
                 "https://www.linkedin.com/oauth/v2/accessToken",
@@ -49,6 +49,7 @@
                 }
             );
             const accessToken = tokenResponse.data.access_token;
+            console.log("at line no 52",accessToken);
 
             const userResponse = await axios.get(
                 "https://api.linkedin.com/v2/userinfo",
@@ -59,11 +60,14 @@
                 }
             );
 
-            
-            const getresponse = UserService.createOrUpdateLinkedinUser(userResponse.data);
+            console.log("at line no 60", userResponse.data);
+            const getresponse = await UserService.createOrUpdateLinkedinUser(
+              userResponse.data
+            );
 
             const user = userResponse.data;
-            console.log(user,'$',getresponse);
+            console.log("LinkedIn user payload:", user);
+            console.log("Saved user:", getresponse);
 
             // const jwt =  process.env.JWT_SECRET! + '@@' + user.name + '@@' + user.sub;
 
@@ -92,7 +96,7 @@
 
 
         } catch (error: any) {
-            console.error(error.response?.data);
+            console.error("At line no 94",error.response?.data);
 
             return NextResponse.json(
             {
