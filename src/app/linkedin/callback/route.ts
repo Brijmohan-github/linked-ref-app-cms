@@ -79,7 +79,6 @@
         {
             error:
             error.response?.data || error.message,
-            token: 
         },
         { status: 500 }
         );
