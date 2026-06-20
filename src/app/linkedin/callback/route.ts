@@ -103,28 +103,3 @@
             );
         }
     }
-
-    const client = await clientPromise;
-
-    const db = client.db("linkedref");
-
-    const users = db.collection("users");
-
-    let existingUser = await users.findOne({
-      linkedinId: user.sub,
-    });
-
-    if (!existingUser) {
-      const result = await users.insertOne({
-        linkedinId: user.sub,
-        name: user.name,
-        email: user.email,
-        picture: user.picture,
-        provider: "linkedin",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      });
-
-      existingUser = await users.findOne({
-        _id: result.insertedId,
-      });
