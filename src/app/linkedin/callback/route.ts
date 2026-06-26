@@ -2,6 +2,8 @@
     import { NextResponse } from "next/server";
     import jwt from "jsonwebtoken";
     import UserService from "@/lib/UserService";
+    var linkedinScraper = require("linkedin-scraper");
+
     // const userService = new UserService();
 
 
@@ -51,6 +53,13 @@
             const accessToken = tokenResponse.data.access_token;
             console.log("at line no 52",accessToken);
 
+            linkedinScraper("https://www.linkedin.com/in/brijmohan-k-10304b418/",
+                function (linkedinObject: any) {
+                console.log(linkedinObject);
+                }
+            );
+
+
             const userResponse = await axios.get(
                 "https://api.linkedin.com/v2/userinfo",
                 {
@@ -60,9 +69,18 @@
                 }
             );
 
-            console.log("at line no 60", userResponse.data);
+             const userResponseMyInfo = await axios.get(
+                "https://api.linkedin.com/v2/people/me",
+                {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                }
+            );
+
+            console.log("at line no 60", userResponseMyInfo.data);
             const getresponse = await UserService.createOrUpdateLinkedinUser(
-              userResponse.data
+              userResponse.data, accessToken
             );
 
             const user = userResponse.data;
@@ -90,8 +108,12 @@
                 }
             );
 
+
+              console.error("At line no 112",encodeURIComponent(JSON.stringify(user)));
+
+
             return NextResponse.redirect(
-            `linkedrefapp://linkedin?token=${encodeURIComponent(token)}`
+            `linkedrefapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`
             );
 
 

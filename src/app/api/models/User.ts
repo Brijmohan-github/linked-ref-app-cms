@@ -22,7 +22,7 @@ const UserSchema = new Schema(
     },
 
     givenName: String,
-
+    accessToken: String,
     familyName: String,
 
     email: {

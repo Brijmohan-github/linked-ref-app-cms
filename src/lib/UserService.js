@@ -67,7 +67,7 @@ class UserService {
     };
   }
 
-  async createOrUpdateLinkedinUser(linkedinProfile) {
+  async createOrUpdateLinkedinUser(linkedinProfile,accessToken) {
     await connectDB();
     const existingUser = await User.findOne({
       linkedinId: linkedinProfile.sub,
@@ -82,6 +82,7 @@ class UserService {
       existingUser.profilePicture = linkedinProfile.picture;
       existingUser.country = linkedinProfile.locale?.country;
       existingUser.language = linkedinProfile.locale?.language;
+      existingUser.accessToken = accessToken;
       existingUser.lastLoginAt = new Date();
       await existingUser.save();
       return existingUser;
@@ -99,8 +100,9 @@ class UserService {
       profilePicture: linkedinProfile.picture,
       // country: linkedinProfile.locale?.country,
       // language: linkedinProfile.locale?.language,
-      // referralCode,
+       referralCode,
       lastLoginAt: new Date(),
+      accessToken: accessToken,
     });
 
     console.log("New user created:", newUser);
