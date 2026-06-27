@@ -2,7 +2,7 @@
     import { NextResponse } from "next/server";
     import jwt from "jsonwebtoken";
     import UserService from "@/lib/UserService";
-    var linkedinScraper = require("linkedin-scraper");
+    // var lsinkedinScraper = require("linkedin-scraper");
 
     // const userService = new UserService();
 
@@ -11,6 +11,9 @@
     
         const { searchParams } = new URL(req.url);
         const code = searchParams.get("code");
+
+        console.log("🚀 Brij  ~  GET ~  code:", code);
+
 
         if (!code) {
             return NextResponse.json(
@@ -53,11 +56,11 @@
             const accessToken = tokenResponse.data.access_token;
             console.log("at line no 52",accessToken);
 
-            linkedinScraper("https://www.linkedin.com/in/brijmohan-k-10304b418/",
-                function (linkedinObject: any) {
-                console.log(linkedinObject);
-                }
-            );
+            // linkedinScraper("https://www.linkedin.com/in/brijmohan-k-10304b418/",
+            //     function (linkedinObject: any) {
+            //     console.log(linkedinObject);
+            //     }
+            // );
 
 
             const userResponse = await axios.get(
