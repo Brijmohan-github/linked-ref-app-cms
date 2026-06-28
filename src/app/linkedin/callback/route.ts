@@ -72,16 +72,16 @@
                 }
             );
 
-             const userResponseMyInfo = await axios.get(
-                "https://api.linkedin.com/v2/people/me",
-                {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                }
-            );
+            //  const userResponseMyInfo = await axios.get(
+            //     "https://api.linkedin.com/v2/people/me",
+            //     {
+            //     headers: {
+            //         Authorization: `Bearer ${accessToken}`,
+            //     },
+            //     }
+            // );
 
-            console.log("at line no 60", userResponseMyInfo.data);
+            // console.log("at line no 60", userResponseMyInfo.data);
             const getresponse = await UserService.createOrUpdateLinkedinUser(
               userResponse.data, accessToken
             );
@@ -116,7 +116,7 @@
 
 
             return NextResponse.redirect(
-            `linkedrefapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`
+                 `linkedrefapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`
             );
 
 
