@@ -112,11 +112,11 @@
             );
 
 
-              console.error("At line no 112",encodeURIComponent(JSON.stringify(user)));
+             // console.error("At line no 112",encodeURIComponent(JSON.stringify(user)));
 
-
+            //&userdata=${encodeURIComponent(JSON.stringify(user))}
             return NextResponse.redirect(
-                 `linkedrefapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`
+                 `linkedrefapp://linkedin?token=${encodeURIComponent(token)}`
             );
 
 
