@@ -93,7 +93,7 @@
             // const jwt =  process.env.JWT_SECRET! + '@@' + user.name + '@@' + user.sub;
 
             return NextResponse.redirect(
-            `linkedrefapp://linkedin?token=${jwt}`
+                `linkedrefapp://linkedin?token=${jwt}`
             );
 
             const payload = {
@@ -112,13 +112,20 @@
             );
 
 
-             // console.error("At line no 112",encodeURIComponent(JSON.stringify(user)));
+            console.error("At line no 112",encodeURIComponent(JSON.stringify(user)));
 
-            //&userdata=${encodeURIComponent(JSON.stringify(user))}
+
             // return NextResponse.redirect(
-            //      `linkedrefapp://linkedin?token=${encodeURIComponent(token)}`
+            //      `linkedrefapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`
             // );
 
+
+            ////////web redirection ////////
+                // const url = new URL('/auth', req.url);
+                // url.searchParams.set('token', token);
+                // url.searchParams.set('userdata', JSON.stringify(user));
+                // return NextResponse.redirect(url);
+             ////////web redirection ////////
 
         } catch (error: any) {
             console.error("At line no 94",error.response?.data);

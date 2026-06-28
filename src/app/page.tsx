@@ -1,10 +1,7 @@
 import Image from "next/image";
 
-export default function Home() {
-  const clientId = process.env.LINKEDIN_CLIENT_ID;
-  const redirectUri = process.env.LINKEDIN_REDIRECT_URI;
-  const linkedinloginurl = "https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=" + clientId + "&redirect_uri=" + redirectUri + "&scope=openid%20profile%20email";
-  return (
+export default function Home() { 
+    return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         <Image
