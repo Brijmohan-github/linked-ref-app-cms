@@ -3,7 +3,7 @@ import { authenticateRequest } from "@/lib/auth";
 
 export const dynamic = 'force-dynamic';
 
-export async function POST(req) {
+export async function GET(req) {
   const { user, response } = await authenticateRequest(req);
 
   if (response) {
