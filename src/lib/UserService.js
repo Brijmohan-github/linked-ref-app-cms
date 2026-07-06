@@ -1,6 +1,5 @@
 import User from "@/app/api/models/User";
-// import { connectDB } from "@/lib/mongodb";
-import connectDB from "@/lib/mongodb";
+import connectDB from "@/lib/dbConnect";
 
 class UserService {
   async createUser(userData) {

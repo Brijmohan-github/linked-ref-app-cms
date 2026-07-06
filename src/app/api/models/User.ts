@@ -73,6 +73,40 @@ const UserSchema = new Schema(
       type: Boolean,
       default: true,
     },
+    industry: {
+      type: String,
+      default: "",
+    },
+
+    job: {
+      type: String,
+      default: "",
+    },
+
+    company: {
+      type: String,
+      default: "",
+    },
+
+    city: {
+      type: String,
+      default: "",
+    },
+
+    state: {
+      type: String,
+      default: "",
+    },
+
+    linkedinUrl: {
+      type: String,
+      default: "",
+    },
+
+    bio: {
+      type: String,
+      default: "",
+    },
 
     lastLoginAt: Date,
   },

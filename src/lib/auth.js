@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/app/api/models/dbConnect";
+import dbConnect from "@/lib/dbConnect";
 import User from "@/app/api/models/User";
 
 export async function authenticateRequest(req) {

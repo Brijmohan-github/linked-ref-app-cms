@@ -1,4 +1,4 @@
-import dbConnect from "@/app/api/models/dbConnect";
+import dbConnect from "@/lib/dbConnect";
 import { NextResponse } from "next/server";
 import User from "@/app/api/models/User";
 import { authenticateRequest } from "@/lib/auth";
