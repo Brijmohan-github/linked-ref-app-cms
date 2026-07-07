@@ -7,9 +7,9 @@ export const dynamic = 'force-dynamic';
 export async function POST(req, res) {
     const { user, response } = await authenticateRequest(req);
   
-    if (response) {
-      return response;
-    }
+    // if (response) {
+    //   return response;
+    // }
 
   await dbConnect();
   const modelVal = await User 
