@@ -26,10 +26,14 @@ export async function POST(req) {
     //   return responseService;
     // }
 
+
+     const responseServiceCompanies = await CompanyService.getCompanyByCreatedById(user.linkedinId);
+      console.log('%c🤪 ~ file: route.js:20 : ', 'color: #09eb74', responseServiceCompanies);
+
     return NextResponse.json({
       status: 200,
       message: "success",
-     // user,
+      companies: responseServiceCompanies,
       //request: body,
     });
   } catch (error) {
