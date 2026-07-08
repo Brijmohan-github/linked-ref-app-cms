@@ -18,6 +18,13 @@ class CompanyService {
     return await Company.findById(companyId);
   }
 
+
+  async getCompanyByCreatedById(createdById) {
+    await connectDB();
+    return await Company.find({ createdBy: createdById }, "name isActive country createdBy");
+  }
+
+
   async updateCompany(companyId, updateData) {
     await connectDB();
     return await Company.findByIdAndUpdate(companyId, updateData, {
