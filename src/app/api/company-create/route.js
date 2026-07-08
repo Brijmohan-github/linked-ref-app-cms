@@ -15,7 +15,7 @@ export async function POST(req) {
 
     // Authenticate user
     const { user, response } = await authenticateRequest(req);
-   // console.log("user - linkedinId:", user);
+     console.log("user - linkedinId:", user);
   
   
   
@@ -33,9 +33,10 @@ export async function POST(req) {
     return NextResponse.json({
       status: 200,
       message: "success",
-      createdcompany:responseService,
-      companies: responseServiceCompanies,
+      addedRecord:responseService,
+      //companies: responseServiceCompanies,
       //request: body,
+      user: user,
     });
   } catch (error) {
     console.error(error);
