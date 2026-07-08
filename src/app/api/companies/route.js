@@ -5,7 +5,7 @@ import CompanyService from "@/lib/CompanyService";
 export const dynamic = 'force-dynamic';
 
 export async function GET(req) {
-  const { user, response } = await authenticateRequest(req);
+  const { user, response, linkedinId, token } = await authenticateRequest(req);
 
   // if (response) {
   //   return response;

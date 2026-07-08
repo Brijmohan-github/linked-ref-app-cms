@@ -4,7 +4,7 @@ import CompanyService from "@/lib/CompanyService";
 export async function POST(req) { 
   try {
 
-    console.log("create company request DATA:", req);
+   // console.log("create company request DATA:", req);
 
 
     // Read JSON body
@@ -14,29 +14,29 @@ export async function POST(req) {
     // console.log("Request Body:", body);
 
     // Authenticate user
-    const { user, response } = await authenticateRequest(req);
-     console.log("user - linkedinId:", user);
+    const { user, response , token, linkedId} = await authenticateRequest(req);
+     console.log("user - data :", linkedId, user);
   
   
   
-     const responseService = await CompanyService.createCompany(body,user) || null;
-     console.log('%c🤪 ~ file: route.js:23 responseService: ', 'color: #09eb74', responseService);
+     const responseService = await CompanyService.createCompany(body,user.linkedinId) || null;
+     console.log('%c🤪 ~ file: route.js:23 responseService: ',  responseService);
   
-    // if (responseService) {
-    //   return responseService;
-    // }
 
-
+ 
      const responseServiceCompanies = await CompanyService.getCompanyByCreatedById(user.linkedinId);
-      console.log('%c🤪 ~ file: route.js:31 responseServiceCompanies: ', 'color: #09eb74', responseServiceCompanies);
+    console.log('%c🤪 ~ file: route.js:31 responseServiceCompanies: ',  responseServiceCompanies);
 
     return NextResponse.json({
+     // token: token,
       status: 200,
       message: "success",
-      addedRecord:responseService,
-      //companies: responseServiceCompanies,
+      "linkedin-Id": linkedId,
+      "linkedin-Id-user": user.linkedinId,
+      //addedRecord:responseService,
+      companies: responseServiceCompanies,
       //request: body,
-      user: user,
+     //user: user,
     });
   } catch (error) {
     console.error(error);

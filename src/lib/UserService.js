@@ -21,21 +21,21 @@ class UserService {
   async getUserByLinkedinId(linkedinId) {
     await connectDB();
     return await User.findOne({
-      linkedinId,
+      "linkedinId": linkedinId,
     });
   }
 
     async getUserByAccessToken(accessToken) {
     await connectDB();
     return await User.findOne({
-      accessToken,
+      "accessToken": accessToken,
     });
   }
 
   async getUserByEmail(email) {
     await connectDB();
     return await User.findOne({
-      email,
+      "email": email,
     });
   }
 
@@ -48,7 +48,7 @@ class UserService {
 
   async updateByLinkedinId(linkedinId, updateData) {
     await connectDB();
-    return await User.findOneAndUpdate({ linkedinId }, updateData, {
+    return await User.findOneAndUpdate({ "linkedinId":linkedinId }, updateData, {
       new: true,
     });
   }

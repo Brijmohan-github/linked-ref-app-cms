@@ -2,10 +2,10 @@ import Company from "@/app/api/models/Company";
 import connectDB from "@/lib/dbConnect";
 
 class CompanyService {
-  async createCompany(companyData, user) {
+  async createCompany(companyData, linkedinId) {
     await connectDB();
     try {
-      const company = await Company.create({ ...companyData, createdBy: user?.linkedinId || "admin" });
+      const company = await Company.create({ ...companyData, createdBy: linkedinId || "admin" });
       return company;
     } catch (error) {
       console.error("Create Company Error:", error);
@@ -19,9 +19,9 @@ class CompanyService {
   }
 
 
-  async getCompanyByCreatedById(createdById) {
+  async getCompanyByCreatedById(linkedinId) {
     await connectDB();
-    return await Company.find({ createdBy: createdById }, "name isActive country createdBy");
+    return await Company.find({ "createdBy": linkedinId }, "name isActive country createdBy");
   }
 
 
