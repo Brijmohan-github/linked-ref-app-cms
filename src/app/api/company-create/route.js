@@ -3,6 +3,10 @@ import { authenticateRequest } from "@/lib/auth";
 import CompanyService from "@/lib/CompanyService";  
 export async function POST(req) { 
   try {
+
+    console.log("create company request DATA:", req);
+
+
     // Read JSON body
    // Read JSON body
     const body = await req.json(); 
