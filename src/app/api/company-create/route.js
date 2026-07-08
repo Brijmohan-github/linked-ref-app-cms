@@ -20,7 +20,7 @@ export async function POST(req) {
   
   
      const responseService = await CompanyService.createCompany(body,user) || null;
-    //  console.log('%c🤪 ~ file: route.js:20 : ', 'color: #09eb74', responseService);
+     console.log('%c🤪 ~ file: route.js:23 responseService: ', 'color: #09eb74', responseService);
   
     // if (responseService) {
     //   return responseService;
@@ -28,11 +28,12 @@ export async function POST(req) {
 
 
      const responseServiceCompanies = await CompanyService.getCompanyByCreatedById(user.linkedinId);
-      console.log('%c🤪 ~ file: route.js:20 : ', 'color: #09eb74', responseServiceCompanies);
+      console.log('%c🤪 ~ file: route.js:31 responseServiceCompanies: ', 'color: #09eb74', responseServiceCompanies);
 
     return NextResponse.json({
       status: 200,
       message: "success",
+      createdcompany:responseService,
       companies: responseServiceCompanies,
       //request: body,
     });
@@ -42,7 +43,7 @@ export async function POST(req) {
     return NextResponse.json(
       {
         status: 400,
-        message: "Invalid request body",
+        message: "Invalid request body create company",
         error: error.message,
       },
       { status: 400 }

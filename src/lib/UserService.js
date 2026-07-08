@@ -25,6 +25,13 @@ class UserService {
     });
   }
 
+    async getUserByAccessToken(accessToken) {
+    await connectDB();
+    return await User.findOne({
+      accessToken,
+    });
+  }
+
   async getUserByEmail(email) {
     await connectDB();
     return await User.findOne({

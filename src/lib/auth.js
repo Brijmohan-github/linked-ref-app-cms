@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect";
 import User from "@/app/api/models/User";
-
+import UserService from "@/lib/UserService";  
 export async function authenticateRequest(req) {
   // console.log("Authenticating request...",req );
  const authHeader = req.headers.get("Authorization");
@@ -20,7 +20,7 @@ export async function authenticateRequest(req) {
 
   try {
     await dbConnect();
-    const userRecord = await User.findOne({ accessToken: bearerToken });
+    const userRecord = await UserService.getUserByAccessToken(bearerToken);
     console.log('%c🤪 ~ file: auth.js:23 : userRecord -', 'color: #3fb5fe', userRecord);
 
     if (userRecord) {
