@@ -1,53 +1,39 @@
 import { NextResponse } from "next/server";
 import { authenticateRequest } from "@/lib/auth";
-import CompanyService from "@/lib/CompanyService";  
-export async function POST(req) { 
-  try {
+import CompanyService from "@/lib/CompanyService";
+export const dynamic = "force-dynamic";
 
-   // console.log("create company request DATA:", req);
+export async function POST(req) {
+  const body = await req.json();
 
+  console.log("request body:", body);
 
-    // Read JSON body
-   // Read JSON body
-    const body = await req.json(); 
-    // console.log("Headers:", Object.fromEntries(req.headers.entries()));
-    // console.log("Request Body:", body);
-
-    // Authenticate user
-    const { user, response , token, linkedId} = await authenticateRequest(req);
-     console.log("user - data :", linkedId, user);
-  
-  
-  
-     const responseService = await CompanyService.createCompany(body,user.linkedinId) || null;
-     console.log('%c🤪 ~ file: route.js:23 responseService: ',  responseService);
-  
-
- 
-     const responseServiceCompanies = await CompanyService.getCompanyByCreatedById(user.linkedinId);
-    console.log('%c🤪 ~ file: route.js:31 responseServiceCompanies: ',  responseServiceCompanies);
-
+  if(body && !body.name){
     return NextResponse.json({
-     // token: token,
-      status: 200,
-      message: "success",
-      "linkedin-Id": linkedId,
-      "linkedin-Id-user": user.linkedinId,
-      //addedRecord:responseService,
-      companies: responseServiceCompanies,
-      //request: body,
-     //user: user,
+      status: 400,
+      message: "Company name is required",
     });
-  } catch (error) {
-    console.error(error);
+  }
 
-    return NextResponse.json(
-      {
-        status: 400,
-        message: "Invalid request body create company",
-        error: error.message,
-      },
-      { status: 400 }
+  const { user, response, linkedinId, token } = await authenticateRequest(req);
+
+  if (response) {
+    return response;
+  }
+
+  if (user) {
+    let responseService = await CompanyService.createCompany(
+      body,
+      user?.linkedinId,
     );
   }
+  const responseService = await CompanyService.getCompanyByCreatedById(
+    user?.linkedinId,
+  );
+  return NextResponse.json({
+    status: 200,
+    message: "success",
+    "user-linkedinId": user?.linkedinId,
+    data: responseService,
+  });
 }
