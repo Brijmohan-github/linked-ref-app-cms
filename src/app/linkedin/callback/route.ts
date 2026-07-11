@@ -112,7 +112,7 @@
             );
 
 
-            console.error("At line no 112",encodeURIComponent(JSON.stringify(user)));
+           // console.error("At line no 112",encodeURIComponent(JSON.stringify(user)));
 
 
             // return NextResponse.redirect(

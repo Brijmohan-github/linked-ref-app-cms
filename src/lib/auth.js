@@ -21,7 +21,7 @@ export async function authenticateRequest(req) {
   try {
     await dbConnect();
     const userRecord = await User.findOne({ accessToken: bearerToken });
-
+    console.log('%c🤪 ~ file: auth.js:22 : userRecord', 'color: #09eb74' , userRecord);
     if (userRecord) {
       return { user: userRecord, response: null };
     }
@@ -29,18 +29,18 @@ export async function authenticateRequest(req) {
     return {
       user: null,
       response: NextResponse.json(
-        { status: 401, message: "Unauthorized activity detected", data: [] },
-        { status: 401 }
+        { status: 401, message: "Unauthorized activity detected, please login again! ", data: [] },
+         { status: 401 }
       ),
     };
 
-    
+
   } catch (error) {
-    console.error("Authentication check failed:", error);
+    //console.error("Authentication check failed:", error);
     return {
       user: null,
       response: NextResponse.json(
-        { status: 500, message: "Unauthorized activity detected", data: [] },
+        { status: 500, message: "Authentication check failed, please login again! ", data: [] },
         { status: 500 }
       ),
     };

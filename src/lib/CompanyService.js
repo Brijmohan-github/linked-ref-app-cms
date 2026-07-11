@@ -21,7 +21,7 @@ class CompanyService {
 
   async getCompanyByCreatedById(linkedinId) {
     await connectDB();
-    return await Company.find({ "createdBy": linkedinId }, "name isActive country createdBy");
+    return await Company.find({ createdBy: linkedinId }, "name isActive country createdBy");
   }
 
 
