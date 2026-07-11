@@ -6,7 +6,7 @@ export async function authenticateRequest(req) {
   //console.log("Authenticating request...",req );
   const authHeader = req.headers.get("Authorization");
   const bearerToken = authHeader?.split(" ")[1];
-  console.log('%c🤪 ~ file: auth.js:8 : bearerToken', 'color: #9bbd84' , bearerToken);
+ // console.log('%c🤪 ~ file: auth.js:8 : bearerToken', 'color: #9bbd84' , bearerToken);
 
   if (!bearerToken) {
     return {
@@ -21,7 +21,7 @@ export async function authenticateRequest(req) {
   try {
     await dbConnect();
     const userRecord = await User.findOne({ accessToken: bearerToken });
-    console.log('%c🤪 ~ file: auth.js:22 : userRecord', 'color: #09eb74' , userRecord);
+   // console.log('%c🤪 ~ file: auth.js:22 : userRecord', 'color: #09eb74' , userRecord);
     if (userRecord) {
       return { user: userRecord, response: null };
     }
