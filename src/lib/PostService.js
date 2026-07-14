@@ -15,7 +15,7 @@ class PostService {
 
   async getPosts() {
     await connectDB();
-    return await Posts.find({}, "title description createdBy");
+    return await Posts.find();
   }
 
     async getPostById(postId) {
