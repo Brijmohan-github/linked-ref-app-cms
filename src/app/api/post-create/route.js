@@ -5,14 +5,14 @@ export const dynamic = "force-dynamic";
 
 export async function POST(req) {
   const body = await req.json();
-  // console.log("request body:", body);
+  console.log("request body:", body);
 
-  if(body && !body.title){
-    return NextResponse.json({
-      status: 400,
-      message: "Post title is required",
-    });
-  }
+  // if(body && !body.title){
+  //   return NextResponse.json({
+  //     status: 400,
+  //     message: "Post title is required",
+  //   });
+  // }
 
   const { user, response, linkedinId, token } = await authenticateRequest(req);
 
@@ -26,13 +26,30 @@ export async function POST(req) {
       user?.linkedinId,
     );
   }
-  const responseService = await PostService.getPostByCreatedById(
-    user?.linkedinId,
-  );
-  return NextResponse.json({
-    status: 200,
-    message: "success",
-    "user-linkedinId": user?.linkedinId,
-    data: responseService,
-  });
+
+  if(body && body.forAll){
+    const responseService = await PostService.getPosts();
+     return NextResponse.json({
+      status: 200,
+      message: "success", 
+      datacount: responseService.length,
+      data: responseService, 
+    });
+
+
+  }else {
+    const responseService = await PostService.getPostByCreatedById(
+      user?.linkedinId,
+    );
+
+     return NextResponse.json({
+      status: 200,
+      message: "success",
+      "user-linkedinId": user?.linkedinId,
+      datacount: responseService.length,
+      data: responseService,
+    });
+  }
+
+ 
 }
