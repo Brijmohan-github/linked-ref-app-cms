@@ -36,7 +36,7 @@ const PostSchema = new Schema({
     type: String,
     default: "admin",
   },    
-});
+}, { timestamps: true });
 
 export default mongoose.models.Posts ||
   mongoose.model("Posts", PostSchema);

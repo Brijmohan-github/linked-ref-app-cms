@@ -15,18 +15,18 @@ class PostService {
 
   async getPosts() {
     await connectDB();
-    return await Posts.find();
+    return await Posts.find().sort({ _id: -1 });
   }
 
     async getPostById(postId) {
     await connectDB();
-    return await Posts.findById(postId);
+    return await Posts.findById(postId).sort({ _id: -1 });
   }
 
 
   async getPostByCreatedById(linkedinId) {
     await connectDB();
-    return await Posts.find({ createdBy: linkedinId }, "title description createdBy");
+    return await Posts.find({ createdBy: linkedinId }, "title description createdBy").sort({ _id: -1 });
   }
 
 
