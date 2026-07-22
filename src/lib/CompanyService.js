@@ -19,9 +19,12 @@ class CompanyService {
   }
 
 
-  async getCompanyByCreatedById(linkedinId) {
+  async getCompanyByCreatedById(linkedinId,datatype) {
     await connectDB();
-    return await Company.find({ createdBy: linkedinId }, "name isActive country createdBy");
+    if(datatype && datatype == 'public')
+          return await Company.find().sort({ _id: -1 });
+    else 
+      return await Company.find({ createdBy: linkedinId }, "name isActive country createdBy");
   }
 
 

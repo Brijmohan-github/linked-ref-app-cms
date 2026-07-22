@@ -4,13 +4,15 @@ import PostService from "@/lib/PostService";
 export const dynamic = "force-dynamic";
 
 export async function GET(req) {
-  const { user, response, linkedinId, token } = await authenticateRequest(req);
-  
+  const { user, response, linkedinId, accessToken } = await authenticateRequest(req);
+  const datatype = req.nextUrl.searchParams.get("datatype");
+  console.log("authenticateRequest return ...", datatype, linkedinId);
+
   if (response) {
     return response;
   }
 
-  const posts = await PostService.getPosts();
+  const posts = await PostService.getPosts(linkedinId, datatype);
 
   return NextResponse.json({
     status: 200,

@@ -13,9 +13,12 @@ class PostService {
     }
   }
 
-  async getPosts() {
+  async getPosts(linkedinId,datatype) {
     await connectDB();
-    return await Posts.find().sort({ _id: -1 });
+    if(datatype && datatype == 'public')
+      return await Posts.find().sort({ _id: -1 });
+    else 
+      return await Posts.find({ createdBy: linkedinId }, "title description createdBy").sort({ _id: -1 });
   }
 
     async getPostById(postId) {
