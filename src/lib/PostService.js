@@ -21,15 +21,32 @@ class PostService {
       return await Posts.find({ createdBy: linkedinId }, "title description createdBy").sort({ _id: -1 });
   }
 
-    async getPostById(postId) {
+  async getPostById(postId) {
     await connectDB();
-    return await Posts.findById(postId).sort({ _id: -1 });
+    return await Posts.findById(postId);
   }
 
 
   async getPostByCreatedById(linkedinId) {
     await connectDB();
     return await Posts.find({ createdBy: linkedinId }, "title description createdBy").sort({ _id: -1 });
+  }
+
+  async getPostsByCompanyId(companyId, createdBy) {
+    await connectDB();
+
+    const query = {
+      $or: [
+        { companyId: companyId },
+        { company: companyId },
+      ],
+    };
+
+    if (createdBy) {
+      query.createdBy = createdBy;
+    }
+
+    return await Posts.find(query, "title description createdBy companyId company industry city state country").sort({ _id: -1 });
   }
 
 
