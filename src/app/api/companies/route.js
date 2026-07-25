@@ -18,6 +18,7 @@ export async function GET(req) {
  
   return NextResponse.json({
     status: 200,
+    datacount: responseService.length,
     message: "success",
     "user-linkedinId": user?.linkedinId,
     data: responseService,

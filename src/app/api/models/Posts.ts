@@ -13,7 +13,10 @@ const PostSchema = new Schema({
     type: String,
     default: "",
   },
-
+  company: {
+    type: String,
+    default: "",
+  },
   city: {
     type: String,
     default: "",

@@ -1,9 +1,12 @@
 import mongoose, { Schema } from "mongoose";
+import { unique } from "next/dist/build/utils";
 
 const CompanySchema = new Schema({
   name: {
     type: String,
     required: true,
+    unique: true,
+    trim: true,
   },
 
   isActive: {

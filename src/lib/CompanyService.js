@@ -1,4 +1,5 @@
 import Company from "@/app/api/models/Company";
+import CompanyCreated from "@/app/api/models/CompanyCreated";
 import connectDB from "@/lib/dbConnect";
 
 class CompanyService {
@@ -9,6 +10,44 @@ class CompanyService {
       return company;
     } catch (error) {
       console.error("Create Company Error:", error);
+      throw error;
+    }
+  }
+
+  async getCompanyByName(name) {
+    await connectDB();
+    try {
+      const normalizedName = (name || "").trim();
+      return await Company.findOne({
+        name: { $regex: `^${normalizedName}$`, $options: "i" },
+      });
+    } catch (error) {
+      console.error("Get Company By Name Error:", error);
+      throw error;
+    }
+  }
+
+  async getCompanyByUser(companyId, userId) {
+    await connectDB();
+    try {
+      return await CompanyCreated.findOne({ companyId, createdBy: userId });
+    } catch (error) {
+      console.error("Get Company By User Error:", error);
+      throw error;
+    }
+  }
+
+  async createCompanyByUser(companyId, userId) {
+    await connectDB();
+    try {
+      const existingCompanyLink = await CompanyCreated.findOne({ companyId, createdBy: userId });
+      if (existingCompanyLink) {
+        return existingCompanyLink;
+      }
+
+      return await CompanyCreated.create({ companyId, createdBy: userId });
+    } catch (error) {
+      console.error("Create Company By User Error:", error);
       throw error;
     }
   }

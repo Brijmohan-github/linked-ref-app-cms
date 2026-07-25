@@ -3,6 +3,9 @@ import connectDB from "@/lib/dbConnect";
 
 class PostService {
   async createPost(postData, linkedinId) {
+  //console.log('%c🤪 ~ file: PostService.js:5 : ', 'color: #6f865d', postData);
+
+    
     await connectDB();
     try {
       const posts = await Posts.create({ ...postData, createdBy: linkedinId || "admin" });
@@ -18,7 +21,7 @@ class PostService {
     if(datatype && datatype == 'public')
       return await Posts.find().sort({ _id: -1 });
     else 
-      return await Posts.find({ createdBy: linkedinId }, "title description createdBy").sort({ _id: -1 });
+      return await Posts.find({ createdBy: linkedinId }, "title description createdBy, createdAt").sort({ _id: -1 });
   }
 
   async getPostById(postId) {
@@ -29,7 +32,7 @@ class PostService {
 
   async getPostByCreatedById(linkedinId) {
     await connectDB();
-    return await Posts.find({ createdBy: linkedinId }, "title description createdBy").sort({ _id: -1 });
+    return await Posts.find({ createdBy: linkedinId }, "title description createdBy,createdAt").sort({ _id: -1 });
   }
 
   async getPostsByCompanyId(companyId, createdBy) {

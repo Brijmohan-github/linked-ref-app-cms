@@ -3,10 +3,10 @@ import dbConnect from "@/lib/dbConnect";
 import User from "@/app/api/models/User";
 
 export async function authenticateRequest(req) {
-  console.log("Authenticating request...",req );
+ // console.log("Authenticating request...",req );
   const authHeader = req.headers.get("Authorization");
   const bearerToken = authHeader?.split(" ")[1];
-   console.log('%c🤪 ~ file: auth.js:8 : bearerToken',  bearerToken);
+  // console.log('%c🤪 ~ file: auth.js:8 : bearerToken',  bearerToken);
 
   if (!bearerToken) {
     return {
