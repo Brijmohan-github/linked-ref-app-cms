@@ -63,7 +63,7 @@ class CompanyService {
     if(datatype && datatype == 'public')
           return await Company.find().sort({ _id: -1 });
     else 
-      return await Company.find({ createdBy: linkedinId }, "name isActive country createdBy");
+      return await Company.find({ createdBy: linkedinId }, "_id name isActive country createdBy");
   }
 
 
