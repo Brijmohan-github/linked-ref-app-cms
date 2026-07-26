@@ -1,6 +1,8 @@
 import Company from "@/app/api/models/Company";
 import CompanyCreated from "@/app/api/models/CompanyCreated";
 import connectDB from "@/lib/dbConnect";
+import CompanyCreatedService from "@/lib/CompanyCreatedService";
+import mongoose from "mongoose";
 
 class CompanyService {
   async createCompany(companyData, linkedinId) {
@@ -60,10 +62,37 @@ class CompanyService {
 
   async getCompanyByCreatedById(linkedinId,datatype) {
     await connectDB();
+     const company_records = [];
     if(datatype && datatype == 'public')
           return await Company.find().sort({ _id: -1 });
-    else 
-      return await Company.find({ createdBy: linkedinId }, "_id name isActive country createdBy");
+    else{ 
+   
+
+       const company_rs =
+                  await CompanyCreatedService.getCompanyByUserId(linkedinId);
+     // company_records.push(company_rs);
+              if (company_rs?.length > 0) {
+                  for (const companyUser of company_rs) {
+                    // company_records.push(companyUser?.companyId);
+                  if (companyUser?.companyId) {
+
+                        const companyData = await Company.findOne(
+                          { _id: companyUser.companyId },
+                          "_id name country createdBy"
+                      ); 
+                       
+                      if (companyData) {
+                         company_records.push(companyData);
+                      }
+                  }
+                  }
+              }
+      return company_records;        
+
+      //return await Company.find({ createdBy: linkedinId }, "_id name isActive country createdBy");
+    
+    
+    }
   }
 
 

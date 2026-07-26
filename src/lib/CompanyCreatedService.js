@@ -14,6 +14,19 @@ class CompanyCreatedService {
       companyId: normalizedCompanyId,
     }).sort({ _id: -1 });
   }
+
+   async getCompanyByUserId(createdBy) {
+    await connectDB();
+
+    // const normalizedCompanyId = mongoose.Types.ObjectId.isValid(createdBy)
+    //   ? new mongoose.Types.ObjectId(createdBy)
+    //   : createdBy;
+
+    return await CompanyCreated.find({
+      createdBy: createdBy,
+    }).sort({ _id: -1 });
+  }
+
 }
 
 const companyCreatedService = new CompanyCreatedService();
