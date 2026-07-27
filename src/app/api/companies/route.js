@@ -13,9 +13,10 @@ export async function GET(req) {
     return response;
   }
   const responseService = await CompanyService.getCompanyByCreatedById(
-    user?.linkedinId,datatype
+    user?.linkedinId,
+    datatype,
   );
- 
+
   return NextResponse.json({
     status: 200,
     datacount: responseService.length,

@@ -31,9 +31,12 @@
         if (company_users_rs?.length > 0) {
             for (const companyUser of company_users_rs) {
             if (companyUser?.createdBy) {
-                const userData = await User.findOne({
-                linkedinId: companyUser.createdBy,
-                },"_id linkedinId  name email profilePicture country  bio city company industry  linkedinUrl  state ");
+                const userData = await User.findOne(
+                {
+                    linkedinId: companyUser.createdBy,
+                },
+                "_id linkedinId  name email profilePicture country  bio city company industry  linkedinUrl  state ",
+                );
                 if (userData) {
                 company_users.push(userData);
                 }
