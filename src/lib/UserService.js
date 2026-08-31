@@ -39,7 +39,12 @@ class UserService {
     });
   }
 
-  async updateUser(userId, updateData) {
+  async updateUserByEmail(email, updateData) {
+    await connectDB();
+    return await User.findOneAndUpdate({ "email": email }, updateData, { returnDocument: "after" });
+  }
+
+    async updateUser(userId, updateData) {
     await connectDB();
     return await User.findByIdAndUpdate(userId, updateData, {
       new: true,

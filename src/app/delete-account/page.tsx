@@ -84,7 +84,7 @@
                 {/* Form */}
                 <form
                 className="mt-8 space-y-5"
-                action="/api/account/delete-request"
+                action="/api/delete-account"
                 method="POST"
                 >
 
@@ -109,14 +109,14 @@
                 </div>
 
                 {/* Username */}
-                <div>
+                {/* <div>
                     <label
                     htmlFor="username"
                     className="mb-2 block text-sm font-semibold text-gray-900"
                     >
-                    Username
+                    Delete pin
                     <span className="ml-1 font-normal text-gray-400">
-                        (optional)
+                        (Required for account verification)
                     </span>
                     </label>
 
@@ -128,7 +128,7 @@
                     placeholder="@username"
                     className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                     />
-                </div>
+                </div> */}
 
                 {/* Reason */}
                 <div>
@@ -208,23 +208,26 @@
 
                 <ul className="mt-3 space-y-2 text-sm leading-6 text-gray-600">
                     <li>
-                    • We will verify your account ownership.
+                    • Enter the email address associated with your ReferralHub account.
                     </li>
 
                     <li>
-                    • Your account will be scheduled for deletion.
+                    • We will send a confirmation link to that email address.
                     </li>
 
                     <li>
-                    • Your personal information will be deleted or anonymized
-                    where applicable.
+                    • Open the link and confirm that you want to permanently delete your account.
                     </li>
 
                     <li>
-                    • Some information may be retained when required by law,
-                    security, fraud prevention, or legitimate business
-                    requirements.
+                    • Your ReferralHub account and associated personal data will then be deleted or anonymized where applicable
                     </li>
+
+                                        <li>
+                    • Some information may be retained where required by law, security, fraud prevention, or legitimate business requirements.
+                    </li>
+
+
                 </ul>
 
                 </div>
