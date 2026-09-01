@@ -34,7 +34,7 @@ class UserService {
 
   async getDeleteRequestByToken(deleteTokenHash) {
     await connectDB();
-    console.log("Searching for user with deleteTokenHash:", deleteTokenHash);
+   // console.log("Searching for user with deleteTokenHash:", deleteTokenHash);
 
     const user = await User.findOne({
       deleteTokenHash: deleteTokenHash,
