@@ -202,7 +202,7 @@ export default function ConfirmDeleteAccountPage() {
 
         <div className="mt-8 border-t border-gray-200 pt-6 text-center">
           <Link
-            href="/privacy"
+            href="/policy"
             className="text-sm text-blue-600 hover:underline"
           >
             Privacy Policy

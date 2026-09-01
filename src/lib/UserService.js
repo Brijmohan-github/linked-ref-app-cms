@@ -21,30 +21,54 @@ class UserService {
   async getUserByLinkedinId(linkedinId) {
     await connectDB();
     return await User.findOne({
-      "linkedinId": linkedinId,
+      linkedinId: linkedinId,
     });
   }
 
-    async getUserByAccessToken(accessToken) {
+  async getUserByAccessToken(accessToken) {
     await connectDB();
     return await User.findOne({
-      "accessToken": accessToken,
+      accessToken: accessToken,
     });
+  }
+
+  async getDeleteRequestByToken(deleteTokenHash) {
+    await connectDB();
+    console.log("Searching for user with deleteTokenHash:", deleteTokenHash);
+
+    const user = await User.findOne({
+      deleteTokenHash: deleteTokenHash,
+    });
+
+    if (!user) {
+      console.log("No user found with this token");
+      return null;
+    }
+
+    const deletedUser = await User.findOneAndDelete({
+      _id: user._id,
+    });
+
+    console.log("deleted user:", deletedUser);
+
+    return true;
   }
 
   async getUserByEmail(email) {
     await connectDB();
     return await User.findOne({
-      "email": email,
+      email: email,
     });
   }
 
   async updateUserByEmail(email, updateData) {
     await connectDB();
-    return await User.findOneAndUpdate({ "email": email }, updateData, { returnDocument: "after" });
+    return await User.findOneAndUpdate({ email: email }, updateData, {
+      returnDocument: "after",
+    });
   }
 
-    async updateUser(userId, updateData) {
+  async updateUser(userId, updateData) {
     await connectDB();
     return await User.findByIdAndUpdate(userId, updateData, {
       new: true,
@@ -53,7 +77,7 @@ class UserService {
 
   async updateByLinkedinId(linkedinId, updateData) {
     await connectDB();
-    return await User.findOneAndUpdate({ "linkedinId":linkedinId }, updateData, {
+    return await User.findOneAndUpdate({ linkedinId: linkedinId }, updateData, {
       new: true,
     });
   }
@@ -78,7 +102,7 @@ class UserService {
     };
   }
 
-  async createOrUpdateLinkedinUser(linkedinProfile,accessToken) {
+  async createOrUpdateLinkedinUser(linkedinProfile, accessToken) {
     await connectDB();
     const existingUser = await User.findOne({
       linkedinId: linkedinProfile.sub,
@@ -111,7 +135,7 @@ class UserService {
       profilePicture: linkedinProfile.picture,
       // country: linkedinProfile.locale?.country,
       // language: linkedinProfile.locale?.language,
-       referralCode,
+      referralCode,
       lastLoginAt: new Date(),
       accessToken: accessToken,
     });

@@ -1,65 +1,94 @@
- 
 import { NextRequest, NextResponse } from "next/server";
+import UserService from "@/lib/UserService";
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    const { token } = await request.json();
+    const body = await req.json();
 
-    if (!token) {
-      return NextResponse.json(
-        {
-          message: "Invalid deletion token.",
-        },
-        { status: 400 }
-      );
-    }
+    console.log("request body:", body);
 
-    const response = await fetch(
-      `${process.env.DELETE_ACCOUNT_API_URL}/api/delete-account/confirm`,
-      {
-        method: "POST",
+    // return NextResponse.json(
+    //   {
+    //     success: body,
+    //     message:
+    //       "Unable to process account deletion.",
+    //   },
+    //   { status: 500 }
+    // );
 
-        headers: {
-          "Content-Type": "application/json",
+      const { token } = body;
 
-          Authorization: `Bearer ${process.env.DELETE_ACCOUNT_API_TOKEN}`,
-        },
+      console.log("authenticateRequest token:", token);
 
-        body: JSON.stringify({
-          token,
-        }),
-
-        cache: "no-store",
+      if (!token) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Deletion token is required.",
+          },
+          { status: 400 }
+        );
       }
-    );
 
-    const data = await response.json().catch(() => ({}));
+      // IMPORTANT:
+      // token is NOT the user's email.
+      // You need to validate the token and get the user
+      // associated with it.
 
-    if (!response.ok) {
+      const deletionRequest =
+        await UserService.getDeleteRequestByToken(token);
+      console.log("deletionRequest:", deletionRequest);
+      if (!deletionRequest) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Invalid or expired deletion link.",
+          },
+          { status: 400 }
+        );
+      }
+
+      // Get the user from the deletion request
+      // const user = await UserService.getUserById(
+      //   deletionRequest.userId
+      // );
+
+      // // if (!user) {
+      // //   return NextResponse.json(
+      // //     {
+      // //       success: false,
+      // //       message: "Account not found.",
+      // //     },
+      // //     { status: 404 }
+      // //   );
+      // // }
+
+      // // Delete user/account data here
+      // await UserService.deleteUser(user._id);
+
+      // // Mark token as used
+      // await UserService.markDeleteRequestUsed(
+      //   deletionRequest._id
+      // );
+
+      return NextResponse.json({
+        success: true,
+        message: "Your ReferralHub account has been deleted.",
+      });
+
+    } catch (error) {
+      console.error(
+        "Account deletion error:",
+        error
+      );
+
       return NextResponse.json(
         {
+          success: false,
           message:
-            data?.message ||
-            "The deletion link is invalid or expired.",
+            "Unable to process account deletion.",
         },
-        { status: response.status }
+        { status: 500 }
       );
     }
-
-    return NextResponse.json({
-      success: true,
-      message: "Your ReferralHub account has been deleted.",
-    });
-
-  } catch (error) {
-    console.error("Account deletion confirmation error:", error);
-
-    return NextResponse.json(
-      {
-        message:
-          "Unable to complete account deletion. Please try again later.",
-      },
-      { status: 500 }
-    );
-  }
-} 
+}

@@ -107,7 +107,18 @@ const UserSchema = new Schema(
       type: String,
       default: "",
     },
-
+     used: {
+      type: Boolean,
+      default: false,
+    },
+    deleteTokenHash: {
+      type: String,
+      default: "",
+    },
+    expiresAt: {
+      type: Date,
+      default: "",
+    },
     lastLoginAt: Date,
   },
   {

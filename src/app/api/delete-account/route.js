@@ -34,21 +34,27 @@ export async function POST(req) {
 
   const token = crypto.randomBytes(32).toString("hex");
 
-  // const tokenHash = crypto
-  //   .createHash("sha256")
-  //   .update(token)
-  //   .digest("hex");
-
-  await UserService.updateUserByEmail(user.email, {
-    tokenHash,
+ 
+  const updateResult = await UserService.updateUserByEmail(user.email, {
+    deleteTokenHash: tokenHash,
     expiresAt: new Date(Date.now() + 30 * 60 * 1000),
     used: false,
   });
-
-  await sendDeletionEmail(email, token);
-
-  return NextResponse.json({
+console.log("updateResult:", updateResult);
+  if (updateResult) {
+    await sendDeletionEmail(email, tokenHash);
+    return NextResponse.json({
+       status: 200,
     message:
       "If an account exists for this email, deletion instructions have been sent.",
   });
+  }
+  
+
+    return NextResponse.json({
+       status: 500,
+      message:
+        "Something went wrong, please try again later.",
+    });
+   
 };
