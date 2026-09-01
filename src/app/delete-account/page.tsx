@@ -1,6 +1,5 @@
  
 "use client";
-
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 
@@ -328,7 +327,7 @@ export default function DeleteAccountPage() {
 
         <div className="mt-3 flex justify-center gap-5 text-sm">
 
-          <Link
+          {/* <Link
             href="/privacy"
             className="text-blue-600 hover:underline"
           >
@@ -347,7 +346,7 @@ export default function DeleteAccountPage() {
             className="text-blue-600 hover:underline"
           >
             Contact
-          </Link>
+          </Link> */}
 
         </div>
 
