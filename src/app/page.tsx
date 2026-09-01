@@ -35,6 +35,15 @@ export default function Home() {
             Build your network. Share opportunities. Help others grow. Grow together.
 
           </p>
+
+           <a
+                    href="https://referralhub.in/privacy"
+                    className="text-blue-600 hover:underline"
+                    >
+                    privacy policy
+                    </a>
+                   
+
         </div>
 
 
