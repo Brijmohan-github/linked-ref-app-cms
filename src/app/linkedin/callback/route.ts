@@ -2,9 +2,7 @@
     import { NextResponse } from "next/server";
     import jwt from "jsonwebtoken";
     import UserService from "@/lib/UserService";
-    // var lsinkedinScraper = require("linkedin-scraper");
-
-    // const userService = new UserService();
+    // var lsinkedinScraper = require("linkedin-scraper"); 
 
 
     export async function GET(req: Request) {
@@ -91,6 +89,7 @@
             console.log("LinkedIn user payload:", user);
             console.log("Saved user:", getresponse);
 
+           
             // const jwt =  process.env.JWT_SECRET! + '@@' + user.name + '@@' + user.sub;
 
        
@@ -110,9 +109,12 @@
             );
 
  
+             return NextResponse.redirect(
+                 `refhubsapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`
+            );
 
             ////////web redirection ////////
-           return NextResponse.redirect(process.env.APP_URL + "/auth?token=" + encodeURIComponent(token) + "&userdata=" + encodeURIComponent(JSON.stringify(user)));    
+                 return NextResponse.redirect(process.env.APP_URL + "/auth?token=" + encodeURIComponent(token) + "&userdata=" + encodeURIComponent(JSON.stringify(user)));    
              ////////web redirection ////////
 
         } catch (error: any) {
@@ -126,4 +128,4 @@
             { status: 500 }
             );
         }
-    }
+    } 
