@@ -41,6 +41,7 @@
             "redirect_uri",
             process.env.LINKEDIN_REDIRECT_URI!
             );
+            console.log("🚀 Brij  ~  GET ~  params:", params.toString());
 
             const tokenResponse =
             await axios.post(
@@ -54,7 +55,7 @@
                 }
             );
             const accessToken = tokenResponse.data.access_token;
-            console.log("at line no 52",accessToken);
+            console.log("at line no 58 ",accessToken);
 
             // linkedinScraper("https://www.linkedin.com/in/brijmohan-k-10304b418/",
             //     function (linkedinObject: any) {
@@ -92,9 +93,11 @@
 
             // const jwt =  process.env.JWT_SECRET! + '@@' + user.name + '@@' + user.sub;
 
-            return NextResponse.redirect(
-                `refhubapp://linkedin?token=${accessToken}&userdata=${encodeURIComponent(JSON.stringify(user))}`
-            );
+            // return NextResponse.redirect(
+            //     `refhubapp://linkedin?token=${accessToken}&userdata=${encodeURIComponent(JSON.stringify(user))}`
+            // );
+
+
 
             const payload = {
                 sub: user.sub,          // LinkedIn user id
@@ -124,11 +127,11 @@
                 // const url = new URL('/auth', req.url);
                 // url.searchParams.set('token', token);
                 // url.searchParams.set('userdata', JSON.stringify(user));
-                // return NextResponse.redirect(url);
+                return NextResponse.redirect("http://192.168.0.4:3000/auth?token=" + encodeURIComponent(token) + "&userdata=" + encodeURIComponent(JSON.stringify(user)));
              ////////web redirection ////////
 
         } catch (error: any) {
-            console.error("At line no 94",error.response?.data);
+            console.error("At line no 135 ",error.response?.data);
 
             return NextResponse.json(
             {
