@@ -93,12 +93,7 @@
 
             // const jwt =  process.env.JWT_SECRET! + '@@' + user.name + '@@' + user.sub;
 
-            // return NextResponse.redirect(
-            //     `refhubapp://linkedin?token=${accessToken}&userdata=${encodeURIComponent(JSON.stringify(user))}`
-            // );
-
-
-
+       
             const payload = {
                 sub: user.sub,          // LinkedIn user id
                 name: user.name,
@@ -114,20 +109,10 @@
                 }
             );
 
-
-           // console.error("At line no 112",encodeURIComponent(JSON.stringify(user)));
-
-
-            // return NextResponse.redirect(
-            //      `linkedrefapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`
-            // );
-
+ 
 
             ////////web redirection ////////
-                // const url = new URL('/auth', req.url);
-                // url.searchParams.set('token', token);
-                // url.searchParams.set('userdata', JSON.stringify(user));
-                return NextResponse.redirect("http://192.168.0.4:3000/auth?token=" + encodeURIComponent(token) + "&userdata=" + encodeURIComponent(JSON.stringify(user)));
+           return NextResponse.redirect(process.env.APP_URL + "/auth?token=" + encodeURIComponent(token) + "&userdata=" + encodeURIComponent(JSON.stringify(user)));    
              ////////web redirection ////////
 
         } catch (error: any) {
