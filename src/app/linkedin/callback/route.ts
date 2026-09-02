@@ -93,7 +93,7 @@
             // const jwt =  process.env.JWT_SECRET! + '@@' + user.name + '@@' + user.sub;
 
             return NextResponse.redirect(
-                `linkedrefapp://linkedin?token=${accessToken}&userdata=${encodeURIComponent(JSON.stringify(user))}`
+                `refhubapp://linkedin?token=${accessToken}&userdata=${encodeURIComponent(JSON.stringify(user))}`
             );
 
             const payload = {
