@@ -109,12 +109,12 @@
             );
 
  
-            //  return NextResponse.redirect(
-            //      `refhubsapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`
-            // );
+             return NextResponse.redirect(
+                 `refhubsapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`
+            );
 
             ////////web redirection ////////
-                 return NextResponse.redirect(process.env.APP_URL + "/auth?token=" + encodeURIComponent(token) + "&userdata=" + encodeURIComponent(JSON.stringify(user)));    
+                // return NextResponse.redirect(process.env.APP_URL + "/auth?token=" + encodeURIComponent(token) + "&userdata=" + encodeURIComponent(JSON.stringify(user)));    
              ////////web redirection ////////
 
         } catch (error: any) {
