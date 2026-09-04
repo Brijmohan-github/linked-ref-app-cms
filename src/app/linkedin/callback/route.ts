@@ -104,6 +104,11 @@ const userAgent = req.headers.get("user-agent") || "";
        return NextResponse.redirect(
         `refhubapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`,
       );
+
+       // return NextResponse.redirect(
+            //      `linkedrefapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`
+            // );
+            
     } else {
       console.log("🚀 Brij  ~  GET ~  device:web s");
 
