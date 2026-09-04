@@ -82,7 +82,7 @@ export async function GET(req: Request) {
       expiresIn: "7d",
     });
 
-    const userAgent = req.headers["user-agent"] || "";
+const userAgent = req.headers.get("user-agent") || "";
 
     let device = "unknown";
 
