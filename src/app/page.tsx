@@ -35,11 +35,21 @@ export default function Home() {
           </p>
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
+        
+
+
+
+<a href={`refhubapp://linkedin?token=${encodeURIComponent('token')}&userdata=${encodeURIComponent('userdata')}`} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838]">
+                    Open in LinkedRef
+                </a>
+<br/>
+
+  <a
             className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
             href={`https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${process.env.LINKEDIN_CLIENT_ID}&redirect_uri=${process.env.APP_URL}/linkedin/callback&scope=openid%20profile%20email`}
             rel="noopener noreferrer"
           >
+
             <Image
               className="dark:invert"
               src="/vercel.svg"

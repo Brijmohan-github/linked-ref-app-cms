@@ -47,15 +47,17 @@
                 <p className="mt-3 break-all">
                     <strong>User Data:</strong> {userdata || "No user data received"}
                 </p>
-
-                <form action={linkedRefUrl} className="mt-5">
+<a href={linkedRefUrl} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838]">
+                    Open in LinkedRef
+                </a>
+                {/* <form action={linkedRefUrl} className="mt-5">
                     <button
                     type="submit"
                     className="inline-flex h-12 w-full items-center justify-center rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838]"
                     >
                     Open in LinkedRef
                     </button>
-                </form>
+                </form> */}
                 </div>
             ) : (
                 <p className="text-gray-500">
