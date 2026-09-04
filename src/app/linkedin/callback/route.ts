@@ -98,19 +98,19 @@ const userAgent = req.headers.get("user-agent") || "";
     console.log("🚀 Brij  ~  GET ~  device:", device);
 
 
-    if (device === "android" || device === "ios" || device === "macintosh") {
-     console.log("🚀 Brij  ~  GET ~  device: mobile ");
+    // if (device === "android" || device === "ios" || device === "macintosh") {
+    //  console.log("🚀 Brij  ~  GET ~  device: mobile ");
 
-       return NextResponse.redirect(
-        `refhubapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`,
-      );
+    //    return NextResponse.redirect(
+    //     `refhubapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`,
+    //   );
 
-       // return NextResponse.redirect(
-            //      `linkedrefapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`
-            // );
-            
-    } else {
-      console.log("🚀 Brij  ~  GET ~  device:web s");
+    //    // return NextResponse.redirect(
+    //         //      `linkedrefapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`
+    //         // );
+
+    // } else {
+    //   console.log("🚀 Brij  ~  GET ~  device:web s");
 
      return NextResponse.redirect(
       process.env.APP_URL +
@@ -119,7 +119,7 @@ const userAgent = req.headers.get("user-agent") || "";
         "&userdata=" +
         encodeURIComponent(JSON.stringify(user)),
     );
-    }
+   // }
     
   } catch (error: any) {
     console.error("At line no 135 ", error.response?.data);
