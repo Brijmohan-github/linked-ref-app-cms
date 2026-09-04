@@ -98,7 +98,7 @@ export async function GET(req: Request) {
 
     if (device === "android" || device === "ios") {
       return NextResponse.redirect(
-        `refhubsapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`,
+        `refhubapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`,
       );
     } else {
      return NextResponse.redirect(
