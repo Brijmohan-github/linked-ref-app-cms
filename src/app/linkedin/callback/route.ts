@@ -1,8 +1,7 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import UserService from "@/lib/UserService";
-import { console } from "inspector/promises";
+import UserService from "@/lib/UserService"; 
 // var lsinkedinScraper = require("linkedin-scraper");
 
 export async function GET(req: Request) {
@@ -106,7 +105,7 @@ const userAgent = req.headers.get("user-agent") || "";
         `refhubapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`,
       );
     } else {
-      console.log("🚀 Brij  ~  GET ~  device: webs");
+      console.log("🚀 Brij  ~  GET ~  device:web s");
 
      return NextResponse.redirect(
       process.env.APP_URL +
