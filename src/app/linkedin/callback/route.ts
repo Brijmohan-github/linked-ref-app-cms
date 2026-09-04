@@ -2,6 +2,7 @@ import axios from "axios";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import UserService from "@/lib/UserService";
+import { console } from "inspector/promises";
 // var lsinkedinScraper = require("linkedin-scraper");
 
 export async function GET(req: Request) {
@@ -95,12 +96,18 @@ const userAgent = req.headers.get("user-agent") || "";
     } else if (/macintosh/i.test(userAgent)) {
       device = "macos";
     }
+    console.log("🚀 Brij  ~  GET ~  device:", device);
+
 
     if (device === "android" || device === "ios" || device === "macintosh") {
-      return NextResponse.redirect(
+     console.log("🚀 Brij  ~  GET ~  device: mobile ");
+
+       return NextResponse.redirect(
         `refhubapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`,
       );
     } else {
+      console.log("🚀 Brij  ~  GET ~  device: webs");
+
      return NextResponse.redirect(
       process.env.APP_URL +
         "/auth?token=" +
