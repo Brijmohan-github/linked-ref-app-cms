@@ -96,7 +96,7 @@ const userAgent = req.headers.get("user-agent") || "";
       device = "macos";
     }
 
-    if (device === "android" || device === "ios") {
+    if (device === "android" || device === "ios" || device === "macintosh") {
       return NextResponse.redirect(
         `refhubapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`,
       );
