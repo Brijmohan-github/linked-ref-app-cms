@@ -314,8 +314,20 @@ export default function PrivacyPage() {
               information where reasonably possible, except where retention
               is required for legal, security, fraud-prevention, or legitimate
               business purposes.
-            </p>
 
+              What happens after your request? <br/>
+1. Enter the email address associated with your ReferralHub account.<br/>
+2. We will send a confirmation link to that email address.<br/>
+3. Open the link and confirm that you want to permanently delete your account.<br/>
+4. Your ReferralHub account and associated personal data will then be deleted or anonymized where applicable.<br/>
+5. Some information may be retained where required by law, security, fraud prevention, or legitimate business requirements.<br/>
+            </p>
+                <a
+                  href="https://referralhub.in/delete-account"
+                  className="text-blue-600 hover:underline"
+                >
+                  Delete my account
+                </a>
           </Section>
 
 
