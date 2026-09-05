@@ -1,14 +1,14 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import UserService from "@/lib/UserService"; 
+import UserService from "@/lib/UserService";
 // var lsinkedinScraper = require("linkedin-scraper");
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const code = searchParams.get("code");
 
-  console.log("🚀 Brij  ~  GET ~  code:", code);
+  console.log("🚀 Brij  ~  line no11 ~  code:", code);
 
   if (!code) {
     return NextResponse.json({ error: "Missing code" }, { status: 400 });
@@ -21,7 +21,7 @@ export async function GET(req: Request) {
     params.append("client_id", process.env.LINKEDIN_CLIENT_ID!);
     params.append("client_secret", process.env.LINKEDIN_CLIENT_SECRET!);
     params.append("redirect_uri", process.env.LINKEDIN_REDIRECT_URI!);
-    console.log("🚀 Brij  ~  GET ~  params:", params.toString());
+    console.log("🚀 Brij  ~  line24   ~  params to linkedin :", params.toString());
 
     const tokenResponse = await axios.post(
       "https://www.linkedin.com/oauth/v2/accessToken",
@@ -33,7 +33,7 @@ export async function GET(req: Request) {
       },
     );
     const accessToken = tokenResponse.data.access_token;
-    console.log("at line no 58 ", accessToken);
+    console.log("🚀 Brij  ~  line36 ~  accessToken:", accessToken);
 
     // linkedinScraper("https://www.linkedin.com/in/brijmohan-k-10304b418/",
     //     function (linkedinObject: any) {
@@ -59,7 +59,7 @@ export async function GET(req: Request) {
     //     }
     // );
 
-    // console.log("at line no 60", userResponseMyInfo.data);
+    console.log("🚀 Brij  ~  line62 ~  userResponse.data:", userResponse.data);
     const getresponse = await UserService.createOrUpdateLinkedinUser(
       userResponse.data,
       accessToken,
@@ -78,11 +78,11 @@ export async function GET(req: Request) {
     };
 
     // Create JWT valid for 7 days
-    const token = jwt.sign(payload, process.env.JWT_SECRET!, {
-      expiresIn: "7d",
-    });
+    // const token = jwt.sign(payload, process.env.JWT_SECRET!, {
+    //   expiresIn: "7d",
+    // });
 
-const userAgent = req.headers.get("user-agent") || "";
+    const userAgent = req.headers.get("user-agent") || "";
 
     let device = "unknown";
 
@@ -95,32 +95,27 @@ const userAgent = req.headers.get("user-agent") || "";
     } else if (/macintosh/i.test(userAgent)) {
       device = "macos";
     }
-    console.log("🚀 Brij  ~  GET ~  device:", device);
-
+    console.log("🚀 Brij  ~  line98 ~  device:", device);
 
     if (device === "android" || device === "ios" || device === "macintosh") {
-     console.log("🚀 Brij  ~  GET ~  device: mobile ");
+      console.log("🚀 Brij  ~  line101 ~  device: mobile ");
 
-       return NextResponse.redirect(
-        `refhubapp://linkedin?token=${encodeURIComponent(token)}&userdata=${encodeURIComponent(JSON.stringify(user))}`,
+      return NextResponse.redirect(
+        `refhubapp://linkedin?token=${accessToken}&userdata=${encodeURIComponent(JSON.stringify(user))}`,
       );
-
-    
-            
     } else {
-      console.log("🚀 Brij  ~  GET ~  device:web s");
+      console.log("🚀 Brij  ~  line107 ~  device:web ");
 
-     return NextResponse.redirect(
-      process.env.APP_URL +
-        "/auth?token=" +
-        encodeURIComponent(token) +
-        "&userdata=" +
-        encodeURIComponent(JSON.stringify(user)),
-    );
+      return NextResponse.redirect(
+        process.env.APP_URL +
+          "/auth?token=" +
+          accessToken +
+          "&userdata=" +
+          encodeURIComponent(JSON.stringify(user)),
+      );
     }
-    
   } catch (error: any) {
-    console.error("At line no 135 ", error.response?.data);
+    console.error("🚀 Brij  ~  line118 ~   At line no 135 ", error.response?.data);
 
     return NextResponse.json(
       {
